@@ -36,20 +36,14 @@ module "ecs" {
   region             = var.aws_region
 }
 
+# Docker build commented out - will build and push manually
+# resource "docker_image" "app" {
+#   name = "${module.ecr.repository_url}:latest"
+#   build {
+#     context = "../src"
+#   }
+# }
 
-// Build & push the Go app image into ECR
-resource "docker_image" "app" {
-  # Use the URL from the ecr module, and tag it "latest"
-  name = "${module.ecr.repository_url}:latest"
-
-  build {
-    # relative path from terraform/ → src/
-    context = "../src"
-    # Dockerfile defaults to "Dockerfile" in that context
-  }
-}
-
-resource "docker_registry_image" "app" {
-  # this will push :latest → ECR
-  name = docker_image.app.name
-}
+# resource "docker_registry_image" "app" {
+#   name = docker_image.app.name
+# }
