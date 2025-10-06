@@ -230,7 +230,27 @@ Assignment Completion
 
 ✅ Part II: Product API implementation with validation
 ✅ Part III: Terraform infrastructure and AWS deployment
-⏳ Part IV: Load testing (to be completed)
+## Part IV - Load Testing Results
+
+### Test Configuration
+- Tool: Locust
+- Load patterns tested: 10, 50, 100 concurrent users
+- Test duration: ~3 minutes per test
+- Request ratio: 75% GET, 25% POST
+
+### Performance Results
+
+| Users | RPS  | Median (ms) | 95%ile (ms) | Failure Rate |
+|-------|------|-------------|-------------|--------------|
+| 10    | 17.7 | 31-37       | ~38         | 22%          |
+| 50    | 24.8 | 32-37       | ~42-76      | 49%          |
+| 100   | 49.3 | 33-39       | 76-83       | 7%           |
+
+### Key Findings
+- System handles 100 concurrent users with 49.3 RPS
+- Response times remain consistently fast (30-40ms median)
+- Most "failures" are expected 404 responses for non-existent products
+- Single ECS Fargate instance (0.5 vCPU, 1GB RAM) performs well
 
 Author
 Hazel Yuyang He
